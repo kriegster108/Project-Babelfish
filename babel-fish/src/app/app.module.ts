@@ -11,7 +11,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
-import { DifferatorComponent } from './differator/differator.component';
 import { TranslatorVerificatorComponent } from './pages/translator-verificator/translator-verificator.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -24,7 +23,6 @@ import {MatSelectModule} from '@angular/material/select';
     HomeComponent,
     PageWrapperComponent,
     HeaderComponent,
-    DifferatorComponent,
     TranslatorVerificatorComponent
   ],
   imports: [
