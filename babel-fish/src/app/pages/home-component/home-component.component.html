@@ -4,11 +4,8 @@
         <mat-option *ngFor="let lang of langList" [value]="lang">{{lang}}</mat-option>
     </mat-select>
 </div>
-<div *ngIf="loading" class="spinner">
-    <div class="inner one"></div>
-    <div class="inner two"></div>
-    <div class="inner three"></div>
-    loading
+<div *ngIf="loading">
+    <app-spinner></app-spinner>
 </div>
 
 <div *ngIf="showLangs && !loading" class="form">

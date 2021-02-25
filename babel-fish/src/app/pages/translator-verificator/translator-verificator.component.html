@@ -5,11 +5,7 @@
   </mat-select>
 </div>
 <div *ngIf="loading">
-  <div class="spinner">
-    <div class="inner one"></div>
-    <div class="inner two"></div>
-    <div class="inner three"></div>
-  </div>
+  <app-spinner></app-spinner>
 </div>
 <mat-card class="verificator-wrapper" *ngIf="languageSelected && !loading">
 
