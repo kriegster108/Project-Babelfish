@@ -8,6 +8,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using TranslationStation.DataModel;
 using TranslationStation.DataModel.Config;
+using Elastic.Apm.NetCoreAll;
+using Prometheus;
 
 namespace TranslationStation
 {
@@ -59,6 +61,10 @@ namespace TranslationStation
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAllElasticApm(Configuration);
+
+            app.UseHttpMetrics();
 
             app.UseAuthorization();
 

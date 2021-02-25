@@ -6,7 +6,7 @@ services:
       dockerfile: ./build/TranslationStation/Dockerfile
     environment: 
       - ASPNETCORE_URLS="http://*:8080"
-      - ElasticApm__ServerUrl=http://apm-server:8200
+      - ELASTIC_APM_SERVER_URL=http://apm-server:8200
       - ELASTIC_APM_SERVICE_NAME=translationstation
       - ELASTIC_APM_ENVIRONMENT=local
     ports:
