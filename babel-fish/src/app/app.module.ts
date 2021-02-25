@@ -9,12 +9,13 @@ import { HeaderComponent } from './pages/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-<<<<<<< Updated upstream
 import { HttpClientModule } from '@angular/common/http';
 import { DifferatorComponent } from './differator/differator.component';
-=======
 import { TranslatorVerificatorComponent } from './pages/translator-verificator/translator-verificator.component';
->>>>>>> Stashed changes
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -22,11 +23,8 @@ import { TranslatorVerificatorComponent } from './pages/translator-verificator/t
     HomeComponent,
     PageWrapperComponent,
     HeaderComponent,
-<<<<<<< Updated upstream
-    DifferatorComponent
-=======
+    DifferatorComponent,
     TranslatorVerificatorComponent
->>>>>>> Stashed changes
   ],
   imports: [
     BrowserModule,
@@ -34,7 +32,12 @@ import { TranslatorVerificatorComponent } from './pages/translator-verificator/t
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

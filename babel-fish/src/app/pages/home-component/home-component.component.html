@@ -1,3 +1,19 @@
-<p>home-component works!</p>
+<div [formGroup]="myGroup" *ngIf="!loading" class="form">
+    <mat-label>Choose Your Language</mat-label>
+    <mat-select  formControlName="langs" matNativeControl (selectionChange)="loadLanguage()">
+        <mat-option *ngFor="let lang of langList" [value]="lang">{{lang}}</mat-option>
+    </mat-select>
+</div>
+<div *ngIf="loading" class="spinner">
+    <div class="inner one"></div>
+    <div class="inner two"></div>
+    <div class="inner three"></div>
+    loading
+</div>
 
-<button>You're Welcome</button>
+<div *ngIf="showLangs && !loading" class="form">
+
+    <p>{{languageObject.welcomeButton}}</p>
+    <p>{{languageObject.weBuild}}</p>
+    <p>{{languageObject.allTheThings}}</p>
+</div>
