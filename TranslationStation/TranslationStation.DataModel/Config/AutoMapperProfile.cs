@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using TranslationStation.DataModel.Models.API;
 using TranslationStation.DataModel.Models.EF;
 

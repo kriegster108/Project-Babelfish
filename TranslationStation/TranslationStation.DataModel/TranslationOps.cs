@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
+using System.Threading.Tasks;
 using TranslationStation.DataModel.Models.API;
 using TranslationStation.DataModel.Models.EF;
 
@@ -11,9 +8,13 @@ namespace TranslationStation.DataModel
     public interface ITranslationOps
     {
         TranslationDto Get(string key);
+        Task<TranslationDto> GetAsync(string key);
         void Add(TranslationDto incomingXltn);
+        Task AddAsync(TranslationDto incomingXltn);
         TranslationDto Upsert(TranslationDto incomingXltn);
+        Task<TranslationDto> UpsertAsync(TranslationDto incomingXltn);
         void Delete(TranslationDto incomingXltn);
+        Task DeleteAsync(TranslationDto incomingXltn);
     }
 
     public class TranslationOps : ITranslationOps
@@ -32,12 +33,23 @@ namespace TranslationStation.DataModel
             var existingXtln = _trnsCtx.Translations.Find(key);
             return _mapper.Map<TranslationDto>(existingXtln);
         }
+        public async Task<TranslationDto> GetAsync(string key)
+        {
+            var existingXtln = await _trnsCtx.Translations.FindAsync(key);
+            return _mapper.Map<TranslationDto>(existingXtln);
+        }
 
         public void Add(TranslationDto incomingXltn)
         {
             var xltn = _mapper.Map<Translation>(incomingXltn);
-            _trnsCtx.Translations.Add(xltn);
-            _trnsCtx.SaveChanges();
+            _ = _trnsCtx.Translations.Add(xltn);
+            _ = _trnsCtx.SaveChanges();
+        }
+        public async Task AddAsync(TranslationDto incomingXltn)
+        {
+            var xltn = _mapper.Map<Translation>(incomingXltn);
+            _ = await _trnsCtx.Translations.AddAsync(xltn);
+            _ = await _trnsCtx.SaveChangesAsync();
         }
 
         public TranslationDto Upsert(TranslationDto incomingXltn)
@@ -56,7 +68,29 @@ namespace TranslationStation.DataModel
             existingXltn.SpanishWord = incomingXltn.SpanishWord;
             existingXltn.IsVerified = incomingXltn.IsVerified;
             var updatedXltn = _trnsCtx.Translations.Update(existingXltn);
-            _trnsCtx.SaveChanges();
+            _ = _trnsCtx.SaveChanges();
+            return _mapper.Map<TranslationDto>(updatedXltn.Entity);
+        }
+        public async Task<TranslationDto> UpsertAsync(TranslationDto incomingXltn)
+        {
+            var existingXltn = await _trnsCtx.Translations.FindAsync(incomingXltn.Key);
+
+            // Insert if null
+            if (existingXltn == null)
+            {
+                var xltn = _mapper.Map<Translation>(incomingXltn);
+                var addedXltn = await _trnsCtx.AddAsync(xltn);
+                return _mapper.Map<TranslationDto>(addedXltn.Entity);
+            }
+
+            existingXltn.EnglishWord = incomingXltn.EnglishWord;
+            existingXltn.SpanishWord = incomingXltn.SpanishWord;
+            existingXltn.IsVerified = incomingXltn.IsVerified;
+
+            // There is no UpdateAsync in EFCore
+            // https://github.com/dotnet/efcore/issues/18746
+            var updatedXltn = _trnsCtx.Translations.Update(existingXltn);
+            _ = await _trnsCtx.SaveChangesAsync();
             return _mapper.Map<TranslationDto>(updatedXltn.Entity);
         }
 
@@ -70,6 +104,20 @@ namespace TranslationStation.DataModel
 
             _trnsCtx.Translations.Remove(existingXltn);
             _trnsCtx.SaveChanges();
+        }
+
+        public async Task DeleteAsync(TranslationDto incomingXltn)
+        {
+            var existingXltn = await _trnsCtx.Translations.FindAsync(incomingXltn.Key);
+            if (existingXltn == null)
+            {
+                return;
+            }
+
+            // There is no RemoveAsync in EFCore
+            // https://github.com/dotnet/efcore/issues/18746
+            _ = _trnsCtx.Translations.Remove(existingXltn);
+            _ = await _trnsCtx.SaveChangesAsync();
         }
     }
 }

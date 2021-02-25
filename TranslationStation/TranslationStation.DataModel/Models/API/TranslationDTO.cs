@@ -1,5 +1,4 @@
-﻿
-namespace TranslationStation.DataModel.Models.API
+﻿namespace TranslationStation.DataModel.Models.API
 {
     public class TranslationDto
     {
