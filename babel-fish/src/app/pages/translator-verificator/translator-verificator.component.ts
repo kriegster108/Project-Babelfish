@@ -1,25 +1,15 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-
+import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'app-translator-verificator',
   templateUrl: './translator-verificator.component.html',
   styleUrls: ['./translator-verificator.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    trigger('slide', [
-      state('left', style({ transform: 'translateX(0)' })),
-      state('right', style({ transform: 'translateX(-50%)' })),
-      transition('* => *', animate(300))
-  ])
-]
 })
 
 export class TranslatorVerificatorComponent implements OnInit {
 
-  @Input() activePane: PaneType = 'left';
+  @Input() translation : any
 
-  isLeftVisible = true;
+  translating = false;
 
   constructor() {
 
@@ -27,8 +17,19 @@ export class TranslatorVerificatorComponent implements OnInit {
 
   ngOnInit(): void {
 
+    // this.nextTranslation(this.translation);
+
   }
 
-}
+  newTranslation(){
+    setTimeout(() => {
+      this.translating = true;
+    }, 1000);
+    }
 
-type PaneType = 'left' | 'right';
+    doneTranslation(){
+      this.translating = false
+    }
+
+  }
+

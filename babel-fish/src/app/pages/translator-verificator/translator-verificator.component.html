@@ -1,19 +1,30 @@
-<p>translator-verificator works!</p>
+<mat-card class="verificator-wrapper">
 
-<div class="verificator-container" [@slide]="activePane">
+  <div class="verificator-container" >
 
-  <div select="[leftPane]">
+    <div class="verificator-translating" *ngIf="translating">
 
-    <div class="english"></div>
-    <div class="other-language"></div>
-    <div class="verification">
-      <button (click)="isLeftVisible = !isLeftVisible">You're Welcome!</button>
+      translating card
+
+      <div class="english">english</div>
+      <div class="other-language">other language</div>
+      <div class="verification">
+        <button (click)="doneTranslation()">You're Welcome!</button>
+      </div>
+
+    </div>
+
+    <div class="verificator-loading" *ngIf="!translating">
+
+      <button (click)="newTranslation()">Gogogogo</button>
+      Next one coming up!
+      <div class="spinner">
+        <div class="inner one"></div>
+        <div class="inner two"></div>
+        <div class="inner three"></div>
+      </div>
     </div>
 
   </div>
 
-  <div select="[rightPane]">
-    Next one coming up!
-  </div>
-
-</div>
+</mat-card>
