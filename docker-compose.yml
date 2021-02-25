@@ -30,6 +30,9 @@ services:
 #ref https://github.com/bitnami/bitnami-docker-postgresql
   postgresql:
     image: 'bitnami/postgresql:latest'
+    environment: 
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=password123
     ports: 
       - 5432:5432
     volumes:
@@ -41,7 +44,7 @@ services:
   postgres_exporter:
     image: wrouesnel/postgres_exporter
     environment: 
-      - DATA_SOURCE_NAME="postgresql://postgres:postgresql:5432/postgres?sslmode=disable"
+      - DATA_SOURCE_NAME="postgresql://postgres:password123@postgresql:5432/postgres?sslmode=disable"
     networks:
       - babble
 
