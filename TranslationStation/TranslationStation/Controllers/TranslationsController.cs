@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,18 +18,26 @@ namespace TranslationStation.Controllers
         // GET api/translations
         // Return translations for a specific language
         [HttpGet("{languageId}")]
-        public dynamic Translations(string languageId)
+        public IActionResult Translations(string languageId)
         {
-            return new[] { new { key = "button1", value = "Hello" } };
+            return new ContentResult() 
+            {
+                Content = JsonSerializer.Serialize(new[] { new { key = "button1", value = "Hello" } }),
+                ContentType = "application/json"
+            };
         }
 
         // GET api/translations/unverified/{ISO639-1 language id}
         // Return translations for a specific language
         [Route("unverified")]
         [HttpGet("{languageId}")]
-        public dynamic UnverifiedTranslation(string languageId)
+        public IActionResult UnverifiedTranslation(string languageId)
         {
-            return new[] { new { key = "button1", enVal = "Hello", value = "Hola" } };
+            return new ContentResult()
+            {
+                Content = JsonSerializer.Serialize(new[] { new { key = "button1", enVal = "Hello", value = "Hola" } }),
+                ContentType = "application/json"
+            };
         }
 
         // PATCH /api/translations/{ISO639-1 language id}/{translation key}
