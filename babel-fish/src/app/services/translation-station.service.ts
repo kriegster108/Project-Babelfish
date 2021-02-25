@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TranslationStationService {
-  TRANSLATION_STATION_URL: string = "http://localhost:8080/api/";
+  TRANSLATION_STATION_URL: string = "http://localhost:8888/api/";
   constructor(
     private http: HttpClient
   ) { }
