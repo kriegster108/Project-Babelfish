@@ -45,7 +45,7 @@ namespace TranslationStation.Controllers
         [HttpPatch("{languageId}/{translationKey}")]
         public string VerifyTranslation([FromBody] string value, string languageId, string translationKey)
         {
-            var translations = _translationService.VerifyTranslation(languageId);
+            var translations = _translationService.VerifyTranslation(languageId, translationKey);
             return "value";
         }
 
