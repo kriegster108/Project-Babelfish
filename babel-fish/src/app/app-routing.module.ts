@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PageWrapperComponent } from './pages/page-wrapper-component/page-wrapper-component.component';
 import { HomeComponent } from './pages/home-component/home-component.component'
+import { DifferatorComponent } from './differator/differator.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
       {
         path: '',
         component: HomeComponent
+      },
+      {
+        path: 'differentiator',
+        component: DifferatorComponent
       }
     ]
   }

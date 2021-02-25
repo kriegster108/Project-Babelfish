@@ -1,21 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-//import * as english from '../../languages/english.json';
+import * as english from '../../languages/english.json';
+import { TranslationStationService } from './translation-station.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LanguageService {
 
-  constructor() { }
+  constructor(
+    private translationStationService: TranslationStationService
+  ) { }
 
   getLanguageObject(language: string): Observable<any> {
     return new Observable((observer) => {
       if(language === 'en') {
-        observer.next();
+        observer.next(english);
         observer.complete();
       } else {
-        this.getThatOtherLanguage(language).subscribe((data) => {
+        this.translationStationService.getLanguage(language).subscribe((data) => {
           observer.next(data);
           observer.complete();
         });
@@ -23,7 +26,4 @@ export class LanguageService {
     });
   }
 
-  getThatOtherLanguage(language: string) {
-    return new Observable();
-  }
 }
