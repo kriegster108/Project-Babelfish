@@ -66,6 +66,8 @@ namespace TranslationStation
 
             app.UseHttpMetrics();
 
+            app.UseMetricServer();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
