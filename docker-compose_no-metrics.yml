@@ -1,0 +1,50 @@
+version: "3.1"
+services:
+  translationstation: 
+    build: 
+      context: .
+      dockerfile: ./build/TranslationStation/Dockerfile
+    environment: 
+      - ASPNETCORE_URLS=http://+:8080
+      - ELASTIC_APM_SERVER_URL=http://apm-server:8200
+      - ELASTIC_APM_SERVICE_NAME=translation-station
+      - ELASTIC_APM_ENVIRONMENT=local
+    ports:
+      - 8888:8080
+    networks:
+      - babble
+
+  babelfish:
+    build:
+      context: . 
+      dockerfile: ./build/babel-fish/Dockerfile
+    environment: 
+      - ELASTIC_APM_SERVER_URL=http://apm-server:8200
+      - ELASTIC_APM_SERVICE_NAME=babel-fish
+      - ELASTIC_APM_ENVIRONMENT=local
+    ports:
+      - 8080:8080
+    networks:
+      - babble
+
+#ref https://github.com/bitnami/bitnami-docker-postgresql
+  postgresql:
+    image: 'bitnami/postgresql:latest'
+    environment: 
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=password123
+      - POSTGRESQL_DATABASE=postgres
+    ports: 
+      - 5432:5432
+    volumes:
+      - postgresdata:/bitnami/postgresql
+    networks:
+      - babble
+
+volumes:
+  postgresdata:
+    driver: local
+
+networks:
+  babble:
+    driver: bridge
