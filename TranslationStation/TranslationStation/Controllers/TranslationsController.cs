@@ -19,7 +19,7 @@ namespace TranslationStation.Controllers
         [HttpGet("{languageId}")]
         public dynamic Translations(string languageId)
         {
-            return new { key = "button1", value = "Hello" };
+            return new[] { new { key = "button1", value = "Hello" } };
         }
 
         // GET api/translations/unverified/{ISO639-1 language id}
@@ -28,7 +28,7 @@ namespace TranslationStation.Controllers
         [HttpGet("{languageId}")]
         public dynamic UnverifiedTranslation(string languageId)
         {
-            return new { key = "button1", enVal = "Hello", value = "Hola" };
+            return new[] { new { key = "button1", enVal = "Hello", value = "Hola" } };
         }
 
         // PATCH /api/translations/{ISO639-1 language id}/{translation key}
