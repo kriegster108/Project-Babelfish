@@ -16,6 +16,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {MatSelectModule} from '@angular/material/select';
     HomeComponent,
     PageWrapperComponent,
     HeaderComponent,
-    TranslatorVerificatorComponent
+    TranslatorVerificatorComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
