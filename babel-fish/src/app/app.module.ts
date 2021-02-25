@@ -17,7 +17,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import { SpinnerComponent } from './components/spinner/spinner.component';
-
+import { MatIconModule } from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +42,9 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     MatInputModule,
     MatSelectModule,
     MatCardModule,
-    HttpClientModule
+    HttpClientModule,
+    MatIconModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

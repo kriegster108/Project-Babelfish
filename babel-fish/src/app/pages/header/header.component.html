@@ -1,1 +1,29 @@
-<mat-toolbar color="secondary">Translation Station</mat-toolbar>
+<!-- <mat-toolbar color="secondary">Translation Station</mat-toolbar> -->
+
+
+<mat-toolbar color="primary">
+    <span class="fill-remaining-space">
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" [overlapTrigger]="false">
+        <button mat-menu-item>
+          <mat-icon>home</mat-icon>
+          <span>Home</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>people_outline</mat-icon>
+          <span>Translator Verificator</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>bug_report</mat-icon>
+          <span>Another Page</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>pan_tool</mat-icon>
+          <span>Other Shit</span>
+        </button>
+      </mat-menu>
+    </span>
+    <span class="fill-remaining-space">Translation Station</span>
+  </mat-toolbar>
