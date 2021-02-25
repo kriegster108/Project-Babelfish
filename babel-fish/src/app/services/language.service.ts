@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import * as english from '../../languages/english.json';
+import english from '../../languages/english.json';
 import { TranslationStationService } from './translation-station.service';
 
 @Injectable({

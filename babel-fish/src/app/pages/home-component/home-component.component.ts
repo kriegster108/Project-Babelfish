@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
     this.loading = true;
     console.log(this.myGroup.controls.langs.value);
     this.langService.getLanguageObject(this.myGroup.controls.langs.value).subscribe(data => {
-      this.languageObject = data.default;
+      this.languageObject = data;
       console.log(this.languageObject);
       this.languageNotSelected = true;
       this.loading = false;

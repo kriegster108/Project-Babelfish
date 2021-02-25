@@ -1,4 +1,17 @@
-<mat-card class="verificator-wrapper">
+<div [formGroup]="myGroup" *ngIf="!loading && !languageSelected" class="form">
+  <mat-label>Choose Your Language</mat-label>
+  <mat-select  formControlName="langs" matNativeControl (selectionChange)="loadLanguage()">
+      <mat-option *ngFor="let lang of langList" [value]="lang">{{lang}}</mat-option>
+  </mat-select>
+</div>
+<div *ngIf="loading">
+  <div class="spinner">
+    <div class="inner one"></div>
+    <div class="inner two"></div>
+    <div class="inner three"></div>
+  </div>
+</div>
+<mat-card class="verificator-wrapper" *ngIf="languageSelected && !loading">
 
   <div class="verificator-container" >
 
@@ -18,11 +31,6 @@
 
       <button (click)="newTranslation()">Gogogogo</button>
       Next one coming up!
-      <div class="spinner">
-        <div class="inner one"></div>
-        <div class="inner two"></div>
-        <div class="inner three"></div>
-      </div>
     </div>
 
   </div>
