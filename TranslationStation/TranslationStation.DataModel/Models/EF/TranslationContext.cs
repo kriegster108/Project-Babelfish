@@ -5,11 +5,10 @@ namespace TranslationStation.DataModel.Models.EF
 {
     public class TranslationContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
-                .UseSnakeCaseNamingConvention();
-
         public DbSet<Translation> Translations { get; set; }
+        public TranslationContext(DbContextOptions<TranslationContext> options): base(options)
+        {
+        }
     }
 
     public class Translation

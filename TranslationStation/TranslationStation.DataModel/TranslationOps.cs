@@ -17,6 +17,9 @@ namespace TranslationStation.DataModel
         Task DeleteAsync(TranslationDto incomingXltn);
     }
 
+    /// <summary>
+    /// I forgot the term "data access" when naming this class.
+    /// </summary>
     public class TranslationOps : ITranslationOps
     {
         private readonly TranslationContext _trnsCtx;

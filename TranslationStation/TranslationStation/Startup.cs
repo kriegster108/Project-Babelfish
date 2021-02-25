@@ -25,7 +25,9 @@ namespace TranslationStation
         {
             // DbContext:
             services.AddDbContext<DataModel.Models.EF.TranslationContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("TranslationsDatabase")));
+                options
+                    .UseNpgsql(Configuration.GetConnectionString("TranslationsDatabase"))
+                    .UseSnakeCaseNamingConvention());
 
             // AutoMapper:
             var mapperConfig = new MapperConfiguration(mc =>
@@ -35,7 +37,7 @@ namespace TranslationStation
             services.AddSingleton(mapperConfig.CreateMapper());
 
             // TranslationOps
-            services.AddScoped<ITranslationOps>();
+            services.AddScoped<ITranslationOps, TranslationOps>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
