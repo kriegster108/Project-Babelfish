@@ -1,0 +1,157 @@
+version: "3.1"
+services:
+  translationstation: 
+    build: 
+      context: .
+      dockerfile: ./build/TranslationStation/Dockerfile
+    environment: 
+      - ASPNETCORE_URLS="http://*:8080"
+      - ElasticApm__ServerUrl=http://apm-server:8200
+      - ELASTIC_APM_SERVICE_NAME=translationstation
+      - ELASTIC_APM_ENVIRONMENT=local
+    ports:
+      - 8888:8080
+    networks:
+      - babble
+
+  babelfish:
+    build:
+      context: . 
+      dockerfile: ./build/babel-fish/Dockerfile
+    environment: 
+      - ELASTIC_APM_SERVER_URL=http://apm-server:8200
+      - ELASTIC_APM_SERVICE_NAME=babelfish
+      - ELASTIC_APM_ENVIRONMENT=local
+    ports:
+      - 8080:8080
+    networks:
+      - babble
+
+#ref https://github.com/bitnami/bitnami-docker-postgresql
+  postgresql:
+    image: 'bitnami/postgresql:latest'
+    ports: 
+      - 5432
+    volumes:
+      - postgresdata:/bitnami/postgresql
+    networks:
+      - babble
+
+#ref https://github.com/prometheus-community/postgres_exporter
+  postgres_exporter:
+    image: wrouesnel/postgres_exporter
+    environment: 
+      - DATA_SOURCE_NAME="postgresql://postgres:postgresql:5432/postgres?sslmode=disable"
+    networks:
+      - babble
+
+  # ref: https://www.elastic.co/guide/en/apm/get-started/current/quick-start-overview.html
+  apm-server:
+    image: docker.elastic.co/apm/apm-server:7.11.0
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
+    cap_add: ["CHOWN", "DAC_OVERRIDE", "SETGID", "SETUID"]
+    cap_drop: ["ALL"]
+    ports:
+    - 8200:8200
+    networks:
+    - babble
+    command: >
+       apm-server -e
+         -E apm-server.rum.enabled=true
+         -E setup.kibana.host=kibana:5601
+         -E setup.template.settings.index.number_of_replicas=0
+         -E apm-server.kibana.enabled=true
+         -E apm-server.kibana.host=kibana:5601
+         -E output.elasticsearch.hosts=["elasticsearch:9200"]
+    healthcheck:
+      interval: 10s
+      retries: 12
+      test: curl --write-out 'HTTP %{http_code}' --fail --silent --output /dev/null http://localhost:8200/
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
+    environment:
+    - bootstrap.memory_lock=true
+    - cluster.name=docker-cluster
+    - cluster.routing.allocation.disk.threshold_enabled=false
+    - discovery.type=single-node
+    - ES_JAVA_OPTS=-XX:UseAVX=2 -Xms1g -Xmx1g
+    ulimits:
+      memlock:
+        hard: -1
+        soft: -1
+    volumes:
+    - esdata:/usr/share/elasticsearch/data
+    ports:
+    - 9200:9200
+    networks:
+    - babble
+    healthcheck:
+      interval: 20s
+      retries: 10
+      test: curl -s http://localhost:9200/_cluster/health | grep -vq '"status":"red"'
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.11.0
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    ports:
+    - 5601:5601
+    networks:
+    - babble
+    healthcheck:
+      interval: 10s
+      retries: 20
+      test: curl --write-out 'HTTP %{http_code}' --fail --silent --output /dev/null http://localhost:5601/api/status
+
+  prometheus:
+    image: prom/prometheus:v2.1.0
+    volumes:
+      - ./monitor/prometheus/:/etc/prometheus/
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    ports:
+      - 9090:9090
+    restart: always
+    networks:
+    - babble
+
+  grafana:
+    image: grafana/grafana
+    user: "472"
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitor/grafana/provisioning/:/etc/grafana/provisioning/
+    env_file:
+      - ./monitor/grafana/config.monitoring
+    restart: always
+    networks:
+    - babble
+
+
+volumes:
+  grafana_data:
+    driver: local
+  esdata:
+    driver: local
+  postgresdata:
+    driver: local
+
+networks:
+  babble:
+    driver: bridge

@@ -1,9 +1,13 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using TranslationStation.DataModel;
+using TranslationStation.DataModel.Config;
 
 namespace TranslationStation
 {
@@ -19,6 +23,19 @@ namespace TranslationStation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // DbContext:
+            services.AddDbContext<DataModel.Models.EF.TranslationContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("TranslationsDatabase")));
+
+            // AutoMapper:
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AutoMapperProfile());
+            });
+            services.AddSingleton(mapperConfig.CreateMapper());
+
+            // TranslationOps
+            services.AddScoped<ITranslationOps>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

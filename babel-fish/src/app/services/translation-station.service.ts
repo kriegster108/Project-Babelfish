@@ -14,7 +14,6 @@ export class TranslationStationService {
 
 
   getLanguage(language:string): Observable<any> {
-    english['newText'] = "new text";
     return new Observable( (obs) => {
       obs.next(english);
       obs.complete();
