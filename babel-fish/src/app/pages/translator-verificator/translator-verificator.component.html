@@ -1,0 +1,19 @@
+<p>translator-verificator works!</p>
+
+<div class="verificator-container" [@slide]="activePane">
+
+  <div select="[leftPane]">
+
+    <div class="english"></div>
+    <div class="other-language"></div>
+    <div class="verification">
+      <button (click)="isLeftVisible = !isLeftVisible">You're Welcome!</button>
+    </div>
+
+  </div>
+
+  <div select="[rightPane]">
+    Next one coming up!
+  </div>
+
+</div>
