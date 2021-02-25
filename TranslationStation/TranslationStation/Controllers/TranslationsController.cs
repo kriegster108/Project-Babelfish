@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TranslationStation.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,46 +14,37 @@ namespace TranslationStation.Controllers
     [ApiController]
     public class TranslationsController : ControllerBase
     {
-        private readonly ITranslationService _translationService;
-        public TranslationsController(ITranslationService translationService)
-        {
-            _translationService = translationService;
-        }
-
         // GET api/translations
         // Return translations for a specific language
         [HttpGet("{languageId}")]
-        public string Translations(string languageId)
+        public dynamic Translations(string languageId)
         {
-            var translations = _translationService.GetTranslations(languageId);
-            return "value";
+            return new { key = "button1", value = "Hello" };
         }
 
         // GET api/translations/unverified/{ISO639-1 language id}
         // Return translations for a specific language
         [Route("unverified")]
         [HttpGet("{languageId}")]
-        public string UnverifiedTranslation(string languageId)
+        public dynamic UnverifiedTranslation(string languageId)
         {
-            var translations = _translationService.GetUnverifiedTranslations(languageId);
-            return "value";
+            return new { key = "button1", enVal = "Hello", value = "Hola" };
         }
 
         // PATCH /api/translations/{ISO639-1 language id}/{translation key}
         // Request to overwrite unverified translation with verified translation
         [HttpPatch("{languageId}/{translationKey}")]
-        public string VerifyTranslation([FromBody] string value, string languageId, string translationKey)
+        public IActionResult VerifyTranslation([FromBody] string value, string languageId, string translationKey)
         {
-            var translations = _translationService.VerifyTranslation(languageId, translationKey);
-            return "value";
+            return Ok();
         }
 
         // POST api/translations
         // Translate all english tags into all supported languages
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] string value)
         {
-            var translations = _translationService.Translate(value);
+            return Ok();
         }
     }
 }
