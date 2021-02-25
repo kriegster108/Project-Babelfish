@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PageWrapperComponent } from './pages/page-wrapper-component/page-wrapper-component.component';
 import { HomeComponent } from './pages/home-component/home-component.component'
 import { DifferatorComponent } from './differator/differator.component';
+import { TranslatorVerificatorComponent } from './pages/translator-verificator/translator-verificator.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path: 'differentiator',
         component: DifferatorComponent
+      },
+      {
+        path: 'translator-verificator',
+        component: TranslatorVerificatorComponent
       }
     ]
   }

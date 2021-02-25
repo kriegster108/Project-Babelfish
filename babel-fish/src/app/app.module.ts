@@ -9,8 +9,12 @@ import { HeaderComponent } from './pages/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+<<<<<<< Updated upstream
 import { HttpClientModule } from '@angular/common/http';
 import { DifferatorComponent } from './differator/differator.component';
+=======
+import { TranslatorVerificatorComponent } from './pages/translator-verificator/translator-verificator.component';
+>>>>>>> Stashed changes
 
 @NgModule({
   declarations: [
@@ -18,7 +22,11 @@ import { DifferatorComponent } from './differator/differator.component';
     HomeComponent,
     PageWrapperComponent,
     HeaderComponent,
+<<<<<<< Updated upstream
     DifferatorComponent
+=======
+    TranslatorVerificatorComponent
+>>>>>>> Stashed changes
   ],
   imports: [
     BrowserModule,
