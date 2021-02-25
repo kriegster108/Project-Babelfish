@@ -13,6 +13,6 @@ export class TranslationStationService {
 
 
   getLanguage(language:string): Observable<any> {
-    return this.http.get(`${this.TRANSLATION_STATION_URL}translations/${language}/es`)
+    return this.http.get(`${this.TRANSLATION_STATION_URL}translations/${language}/es`);
   }
 }
