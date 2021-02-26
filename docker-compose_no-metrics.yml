@@ -29,14 +29,14 @@ services:
       - POSTGRESQL_DATABASE=postgres
     ports: 
       - 5432:5432
-    volumes:
-      - postgresdata:/bitnami/postgresql
+    # volumes:
+    #   - postgresdata:/bitnami/postgresql
     networks:
       - babble
 
-volumes:
-  postgresdata:
-    driver: local
+# volumes:
+#   postgresdata:
+#     driver: local
 
 networks:
   babble:
