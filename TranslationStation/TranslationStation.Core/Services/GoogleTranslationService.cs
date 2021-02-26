@@ -11,22 +11,15 @@ namespace TranslationStation.Core.Services
     public class GoogleTranslationService : ITranslationService
     {
         private TranslationClient translationClient;
-        private TranslationOps translationOps;
-        private LanguageService languageService;
 
-        public GoogleTranslationService(TranslationOps xlateOps, LanguageService langService)
+        public GoogleTranslationService(TranslationOps xlateOps)
         {
-            translationOps = xlateOps;
             translationClient = TranslationClient.Create();
-            languageService = langService;
         }
 
-        public void CreateTranslations(Dictionary<string, string> values)
+        public IEnumerable<TranslationDto> CreateTranslations(Dictionary<string, string> values)
         {
-            //foreach (string lang in languageService.SupportedLanguages)
-            //{
-            //    var translations = translationClient.TranslateText(value.Values, lang, "en");
-            //}
+            var returnValue = new List<TranslationDto>();
             foreach (var value in values)
             {
                 var translation = translationClient.TranslateText(value.Value, "es", "en");
@@ -38,13 +31,9 @@ namespace TranslationStation.Core.Services
                     IsVerified = false,
                     Key = value.Key
                 };
-                translationOps.Upsert(xlateDTO);
+                returnValue.Add(xlateDTO);
             }
-        }
-
-        public void VerifyTranslation()
-        {
-            throw new NotImplementedException();
+            return returnValue;
         }
     }
 }

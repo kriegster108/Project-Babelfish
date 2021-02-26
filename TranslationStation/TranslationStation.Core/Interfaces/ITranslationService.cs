@@ -7,12 +7,6 @@ namespace TranslationStation.Core.Interfaces
 {
     public interface ITranslationService
     {
-        List<TranslationDto> GetTranslations();
-
-        List<TranslationDto> GetUnverifiedTranslations();
-
-        void VerifyTranslation();
-
-        void CreateTranslations(Dictionary<string, string> values);
+        IEnumerable<TranslationDto> CreateTranslations(Dictionary<string, string> values);
     }
 }

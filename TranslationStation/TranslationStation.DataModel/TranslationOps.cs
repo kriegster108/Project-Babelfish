@@ -132,9 +132,15 @@ namespace TranslationStation.DataModel
             return _mapper.Map<List<TranslationDto>>(existingXtln);
         }
 
-        public Task<IEnumerable<TranslationDto>> GetAllAsync()
+        public async Task<IEnumerable<TranslationDto>> GetAllAsync()
         {
-            throw new System.NotImplementedException();
+            var translations = _trnsCtx.Translations.AsAsyncEnumerable();
+            List<TranslationDto> translationDTOs = new List<TranslationDto>();
+            await foreach (var item in translations)
+            {
+                translationDTOs.Add(_mapper.Map<TranslationDto>(item));
+            }
+            return translationDTOs;
         }
     }
 }
