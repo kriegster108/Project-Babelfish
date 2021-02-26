@@ -16,24 +16,17 @@ namespace TranslationStation.Controllers
     public class TranslationsController : ControllerBase
     {
         // GET api/translations
-        // Return translations for a specific language
+        /// <summary>
+        /// Return translations for a specific language.
+        /// Return all unverified translations for a specific language
+        /// </summary>
+        /// <param name="languageId">The language ID of the translation to get.</param>
+        /// <param name="unverified">Whether or not to filter out verified translations.</param>
+        /// <returns>A list of translations in the specified language.</returns>
         [HttpGet("{languageId}")]
-        public IActionResult Translations(string languageId)
+        public IActionResult Translations([FromRoute] string languageId, [FromQuery] bool unverified = false)
         {
             return new ContentResult() 
-            {
-                Content = JsonSerializer.Serialize(new[] { new { key = "button1", value = "Hello" } }),
-                ContentType = "application/json"
-            };
-        }
-
-        // GET api/translations/unverified/{ISO639-1 language id}
-        // Return translations for a specific language
-        [Route("unverified")]
-        [HttpGet("{languageId}")]
-        public IActionResult UnverifiedTranslation(string languageId)
-        {
-            return new ContentResult()
             {
                 Content = JsonSerializer.Serialize(new[] { new { key = "button1", enVal = "Hello", value = "Hola" } }),
                 ContentType = "application/json"
@@ -45,7 +38,7 @@ namespace TranslationStation.Controllers
         [HttpPatch("{languageId}/{translationKey}")]
         public IActionResult VerifyTranslation([FromBody] string value, string languageId, string translationKey)
         {
-            return Ok();
+            return Ok(JsonSerializer.Serialize(new { value = value, languageId = languageId, translationKey = translationKey }));
         }
 
         // POST api/translations
@@ -53,7 +46,7 @@ namespace TranslationStation.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] string value)
         {
-            return Ok();
+            return Ok(JsonSerializer.Serialize(new { value = value }));
         }
     }
 }
