@@ -19,6 +19,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { MatIconModule } from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
+import { DifferatorComponent } from './pages/differator/differator.component';
  
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {MatMenuModule} from '@angular/material/menu';
     PageWrapperComponent,
     HeaderComponent,
     TranslatorVerificatorComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    DifferatorComponent
   ],
   imports: [
     BrowserModule,

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { TranslationStationService } from './translation-station.service';
 import * as englishObj from '../../languages/english.json';
 import { LanguageService } from './language.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,8 @@ export class DifferatorService {
     this.langGang = langGang;
   }
 
-  private postChanges(localObject, originObject): void {
-    this.translationStation.sendNewTranslations(this.differator(localObject, originObject));
+  private postChanges(localObject, originObject): Observable<any> {
+    return this.translationStation.sendNewTranslations(this.differator(localObject, originObject));
   }
 
   private differator(localObject: any, originObject: any): any {
@@ -33,9 +34,12 @@ export class DifferatorService {
       return differencesObj;
     }
     // possible lang strings are: 'en', 'es'
-    public differentiateItBroSki(lang: string): void {
-      this.langGang.getLanguageObject(lang).subscribe((langObj) => {
-        this.postChanges(englishObj, langObj);
+    public differentiateItBroSki(lang: string): Observable<any> {
+      return new Observable((obs) => {
+        this.langGang.getLanguageObject(lang).subscribe((langObj) => {
+          obs.next(this.postChanges(englishObj, langObj));
+          obs.complete();
+        })
       });
     }
 }
