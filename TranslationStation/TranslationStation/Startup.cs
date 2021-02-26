@@ -1,4 +1,5 @@
 using AutoMapper;
+using AutoMapper.Extensions.ExpressionMapping;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +36,7 @@ namespace TranslationStation
             // AutoMapper:
             var mapperConfig = new MapperConfiguration(mc =>
             {
+                mc.AddExpressionMapping();
                 mc.AddProfile(new AutoMapperProfile());
             });
             services.AddSingleton(mapperConfig.CreateMapper());
