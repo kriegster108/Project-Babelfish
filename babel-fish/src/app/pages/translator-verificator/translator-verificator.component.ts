@@ -89,6 +89,7 @@ export class TranslatorVerificatorComponent implements OnInit {
 
   outOfThings() {
     this.languageSelected = false;
+    this.loading = false;
     this.translationsDone = true;
   }
 
