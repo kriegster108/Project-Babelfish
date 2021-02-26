@@ -11,6 +11,8 @@ using TranslationStation.DataModel.Config;
 using Elastic.Apm.NetCoreAll;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Prometheus;
+using TranslationStation.Core.Interfaces;
+using TranslationStation.Core.Services;
 
 namespace TranslationStation
 {
@@ -41,6 +43,8 @@ namespace TranslationStation
 
             // TranslationOps
             services.AddScoped<ITranslationOps, TranslationOps>();
+            services.AddScoped<ITranslationService, GoogleTranslationService>();
+            services.AddScoped<ILanguageService, GoogleLanguageService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

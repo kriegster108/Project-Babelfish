@@ -12,7 +12,7 @@ namespace TranslationStation.Core.Services
     {
         private TranslationClient translationClient;
 
-        public GoogleTranslationService(TranslationOps xlateOps)
+        public GoogleTranslationService()
         {
             translationClient = TranslationClient.Create();
         }
