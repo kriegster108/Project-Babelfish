@@ -53,6 +53,12 @@ namespace TranslationStation.Controllers
         [HttpGet("/unverified")]
         public IActionResult UnverifiedTranslations([FromQuery] string lang)
         {
+            var translations = translationService.GetTranslations();
+            var returnVal = new List<GetUnverifiedTranslationsOutput>();
+            foreach (var translation in translations.Where(x => x.IsVerified == false))
+            {
+                returnVal.Add(new GetUnverifiedTranslationsOutput(translation.Key, translation.EnglishWord, languageService.GetValueOfLanguage(translation, lang)));
+            }
             return new ContentResult()
             {
                 Content = JsonSerializer.Serialize(new[] { new { key = "button1", enVal = "Hello", value = "Hola" } }),
