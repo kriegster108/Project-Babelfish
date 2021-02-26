@@ -13,23 +13,22 @@ export class TranslationStationService {
 
 
   getLanguage(language:string): Observable<any> {
-    return this.http.get(`${this.TRANSLATION_STATION_URL}translations/${language}`);
+    return this.http.get(`${this.TRANSLATION_STATION_URL}translations?lang=${language}`);
   }
 
   getUnverifiedLanguage(language:string): Observable<any> {
-    return this.http.get(`${this.TRANSLATION_STATION_URL}translations/unverified/${language}`);
+    return this.http.get(`${this.TRANSLATION_STATION_URL}translations/unverified?lang=${language}`);
   }
 
   sendNewTranslations(newTranslations:any) {
-    return this.http.post(`${this.TRANSLATION_STATION_URL}translations/unverified/en`, newTranslations);
+    return this.http.post(`${this.TRANSLATION_STATION_URL}translations/`, newTranslations);
   }
 
-  sendVerifiedTranslation(translationObject:translationObj) {
-    return this.http.patch(`${this.TRANSLATION_STATION_URL}translations/unverified/es`, translationObject);
+  sendVerifiedTranslation(translationObject:translationObj, language, key) {
+    return this.http.patch(`${this.TRANSLATION_STATION_URL}translations/${language}/${key}`, translationObject);
   }
 }
 
 declare interface translationObj {
-  key: string;
   value: string;
 }

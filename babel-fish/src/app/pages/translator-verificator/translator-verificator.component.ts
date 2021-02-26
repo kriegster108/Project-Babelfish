@@ -38,34 +38,17 @@ export class TranslatorVerificatorComponent implements OnInit {
 
   loadLanguage() {
     this.loading = true;
-    // this.langService.getUnverifiedLanguage(this.myGroup.controls.langs.value).subscribe(data => {
-    //   this.languageObject = data;
-    //   console.log(this.languageObject);
-    //   this.setItem();
-    //   this.languageSelected = true;
-    //   this.loading = false;
-    // });
-    //temporary
-    this.languageObject = [
-      {
-        key: "thing",
-        enVal: "thing",
-        value: "spanish thing"
-      },
-      {
-        key: "thing2",
-        enVal: "thing2",
-        value: "spanish thing2"
+    this.langService.getUnverifiedLanguage(this.myGroup.controls.langs.value).subscribe(data => {
+      this.languageObject = data;
+      console.log(this.languageObject);
+      if(this.languageObject.length > 0) {
+        this.setItem();
+        this.languageSelected = true;
+        this.loading = false;
+      } else {
+        this.outOfThings();
       }
-    ];
-    if(this.languageObject.length > 0) {
-      this.setItem();
-      this.languageSelected = true;
-      this.loading = false;
-    } else {
-      this.outOfThings();
-    }
-    
+    });
   }
 
   setItem() {
@@ -90,16 +73,15 @@ export class TranslatorVerificatorComponent implements OnInit {
   submitTranslation() {
     this.loading = true;
     let body = {
-      key: this.languageObject[this.iterator].key,
       value: this.verificationForm.controls["spanish"].value
     }
-    this.langService.sendVerifiedTranslation(body).subscribe(data => {
+    this.langService.sendVerifiedTranslation(body, 'es', this.languageObject[this.iterator].key).subscribe(data => {
       this.nextItem();
       this.loading = false;
     }, () => {
       alert('There was an error with the submission. please try again.')
       this.loading = false;
-    })
+    });
   }
 
   outOfThings() {
