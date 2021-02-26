@@ -9,11 +9,11 @@
   </div>
 </mat-card>
 
-<mat-card>
+
   <div *ngIf="loading">
     <app-spinner></app-spinner>
   </div>
-</mat-card>
+
 
 <mat-card class="verificator-wrapper" *ngIf="!loading && languageSelected">  
   <div [formGroup]="verificationForm" class="form">

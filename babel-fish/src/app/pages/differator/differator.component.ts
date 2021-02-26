@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DifferatorService } from '../../services/differator.service'
+import { DifferatorService } from '../../services/differator.service';
+import { HeaderService } from '../../services/header.service';
 
 @Component({
   selector: 'app-differator',
@@ -13,9 +14,11 @@ export class DifferatorComponent implements OnInit {
 
   constructor(
     private differatorService: DifferatorService,
+    private headerService: HeaderService
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(){
+    this.headerService.setTitle('Differator');
   }
 
   differentiate(language : string){
@@ -24,11 +27,8 @@ export class DifferatorComponent implements OnInit {
       data.subscribe(data2 => {
         this.completeMessage = 'Differentiation complete!';
         this.loading = false;
-      })
-    })
+      });
+    });
+
   }
-
-//   whoever uses it from the UI, all you gotta do is inject DifferatorService into your component, and then call
-// differentiateItBroSki(language: string) with language being like en or es
-
 }

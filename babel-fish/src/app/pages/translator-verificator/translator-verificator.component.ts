@@ -41,6 +41,18 @@ export class TranslatorVerificatorComponent implements OnInit {
 
   loadLanguage() {
     this.loading = true;
+    this.languageObject = [
+      {
+      key: "thing",
+      enVal: "thing",
+      value: "spanish thing"
+      },
+      {
+      key: "thing2",
+      enVal: "thing2",
+      value: "spanish thing2"
+      }
+    ]
     this.langService.getUnverifiedLanguage(this.myGroup.controls.langs.value).subscribe(data => {
       this.languageObject = data;
       console.log(this.languageObject);
