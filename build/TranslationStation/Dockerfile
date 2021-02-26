@@ -9,6 +9,7 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
 COPY ["./TranslationStation/TranslationStation/TranslationStation.csproj", "TranslationStation/"]
 COPY ["./TranslationStation/TranslationStation.DataModel/TranslationStation.DataModel.csproj", "TranslationStation.DataModel/"]
+COPY ["./TranslationStation/TranslationStation.Core/TranslationStation.Core.csproj", "TranslationStation.Core/"]
 RUN dotnet restore "./TranslationStation/TranslationStation.csproj"
 COPY ./TranslationStation .
 WORKDIR "/src/TranslationStation"
