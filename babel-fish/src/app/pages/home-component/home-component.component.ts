@@ -37,18 +37,20 @@ export class HomeComponent implements OnInit {
     this.langService.getLanguageObject(this.myGroup.controls.langs.value).subscribe(data => {
       this.languageObject = data;
       console.log(this.languageObject);
+      this.convertJsonToArray();
       this.languageNotSelected = true;
       this.loading = false;
       this.showLangs = true;
     });
-    this.convertJsonToArray()
+    
   }
 
   convertJsonToArray(){
-    var json_data = this.languageObject
-    var result = [];
-    for(var i in json_data)
-    result.push(json_data [i])
+    let json_data = this.languageObject
+    let result = [];
+    for(let i in json_data) {
+      result.push(json_data [i])
+    }
     this.jsonKeys = result;
   }
 
