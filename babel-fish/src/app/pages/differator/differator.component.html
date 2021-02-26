@@ -2,7 +2,7 @@
 <app-spinner *ngIf="loading"></app-spinner>
 
 <mat-card class="wrapper" *ngIf="!loading">
-  <button class="primary" color="primary" mat-button (click)="differentiate()">Submit</button>
+  <button class="primary" color="primary" mat-button (click)="differentiate('en')">Submit</button>
 </mat-card>
 
 <mat-card class="wrapper" *ngIf="completeMessage">
