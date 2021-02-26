@@ -88,7 +88,18 @@ export class TranslatorVerificatorComponent implements OnInit {
   }
 
   submitTranslation() {
-    // todo
+    this.loading = true;
+    let body = {
+      key: this.languageObject[this.iterator].key,
+      value: this.verificationForm.controls["spanish"].value
+    }
+    this.langService.sendVerifiedTranslation(body).subscribe(data => {
+      this.nextItem();
+      this.loading = false;
+    }, () => {
+      alert('There was an error with the submission. please try again.')
+      this.loading = false;
+    })
   }
 
   outOfThings() {
