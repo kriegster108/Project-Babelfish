@@ -6,6 +6,7 @@ using System;
 using Google.Cloud.Translation.V2;
 using System.Threading.Tasks;
 using System.Linq;
+using TranslationStation.DataModel.Models.API;
 
 namespace TranslationStation.Core.Services
 {
@@ -15,6 +16,19 @@ namespace TranslationStation.Core.Services
         public GoogleLanguageService(IConfiguration config, TranslationClient client) : base(config)
         {
             translationClient = client;
+        }
+
+        public string GetValueOfLanguage(TranslationDto translation, string language)
+        {
+            switch (language)
+            {
+                case "en":
+                    return translation.EnglishWord;
+                case "es":
+                    return translation.SpanishWord;
+                default:
+                    throw new Exception($"Failed to get value of langauge {language} from translation.");
+            }
         }
 
         public bool VerifyLanguage(string language)
