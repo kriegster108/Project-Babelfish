@@ -16,6 +16,8 @@ export class HomeComponent implements OnInit {
   langList: string[] = ['en', 'es'];
   languageObject: any;
   langForm: any;
+  jsonKeys: any[];
+
   constructor(
     private langService : LanguageService,
     private headerService : HeaderService
@@ -39,6 +41,15 @@ export class HomeComponent implements OnInit {
       this.loading = false;
       this.showLangs = true;
     });
+    this.convertJsonToArray()
+  }
+
+  convertJsonToArray(){
+    var json_data = this.languageObject
+    var result = [];
+    for(var i in json_data)
+    result.push(json_data [i])
+    this.jsonKeys = result;
   }
 
 }

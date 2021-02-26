@@ -23,7 +23,7 @@ export class TranslatorVerificatorComponent implements OnInit {
   constructor(
     private langService : TranslationStationService,
     private cd: ChangeDetectorRef,
-    private headerService: HeaderService 
+    private headerService: HeaderService
   ) {
 
   }
@@ -52,18 +52,25 @@ export class TranslatorVerificatorComponent implements OnInit {
       enVal: "thing2",
       value: "spanish thing2"
       }
-    ]
-    this.langService.getUnverifiedLanguage(this.myGroup.controls.langs.value).subscribe(data => {
-      this.languageObject = data;
-      console.log(this.languageObject);
-      if(this.languageObject.length > 0) {
-        this.setItem();
-        this.languageSelected = true;
-        this.loading = false;
-      } else {
-        this.outOfThings();
-      }
-    });
+    ];
+    if(this.languageObject.length > 0) {
+      this.setItem();
+      this.languageSelected = true;
+      this.loading = false;
+    } else {
+      this.outOfThings();
+    }
+    // this.langService.getUnverifiedLanguage(this.myGroup.controls.langs.value).subscribe(data => {
+    //   this.languageObject = data;
+    //   console.log(this.languageObject);
+      // if(this.languageObject.length > 0) {
+      //   this.setItem();
+      //   this.languageSelected = true;
+      //   this.loading = false;
+      // } else {
+      //   this.outOfThings();
+      // }
+    // });
   }
 
   setItem() {

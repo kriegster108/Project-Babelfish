@@ -1,16 +1,25 @@
-<div [formGroup]="myGroup" *ngIf="!loading" class="form">
+<mat-card class="home-wrapper">
+
+  <p class="header">Welcome to Project Babel!</p>
+
+  <div [formGroup]="myGroup" *ngIf="!loading" class="form">
     <mat-label>Choose Your Language</mat-label>
     <mat-select  formControlName="langs" matNativeControl (selectionChange)="loadLanguage()">
-        <mat-option *ngFor="let lang of langList" [value]="lang">{{lang}}</mat-option>
+      <mat-option *ngFor="let lang of langList" [value]="lang">{{lang}}</mat-option>
     </mat-select>
-</div>
-<div *ngIf="loading">
+  </div>
+  <div *ngIf="loading">
     <app-spinner></app-spinner>
-</div>
+  </div>
 
-<div *ngIf="showLangs && !loading" class="form">
+  <div *ngIf="showLangs && !loading" class="form">
 
-    <p>{{languageObject.welcomeButton}}</p>
-    <p>{{languageObject.weBuild}}</p>
-    <p>{{languageObject.allTheThings}}</p>
-</div>
+    <p style="font-weight: bold;">Current Keys for selected language:</p>
+
+    <div class="language-key" *ngFor="let key of jsonKeys">
+      {{key}}
+    </div>
+
+  </div>
+
+</mat-card>

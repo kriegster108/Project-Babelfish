@@ -20,7 +20,8 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { MatIconModule } from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import { DifferatorComponent } from './pages/differator/differator.component';
- 
+import { FooterComponent } from './pages/footer/footer.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +30,8 @@ import { DifferatorComponent } from './pages/differator/differator.component';
     HeaderComponent,
     TranslatorVerificatorComponent,
     SpinnerComponent,
-    DifferatorComponent
+    DifferatorComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +48,7 @@ import { DifferatorComponent } from './pages/differator/differator.component';
     MatCardModule,
     HttpClientModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
