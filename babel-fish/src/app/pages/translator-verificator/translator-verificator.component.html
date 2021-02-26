@@ -1,4 +1,4 @@
-<div [formGroup]="myGroup" *ngIf="!loading && !languageSelected" class="form">
+<div [formGroup]="myGroup" *ngIf="!loading && !languageSelected && !translationsDone" class="form">
   <mat-label>Choose Your Language</mat-label>
   <mat-select  formControlName="langs" matNativeControl (selectionChange)="loadLanguage()">
       <mat-option *ngFor="let lang of langList" [value]="lang">{{lang}}</mat-option>
@@ -7,28 +7,28 @@
 <div *ngIf="loading">
   <app-spinner></app-spinner>
 </div>
-<mat-card class="verificator-wrapper" *ngIf="languageSelected && !loading">
-
-  <div class="verificator-container" >
-
-    <div class="verificator-translating" *ngIf="translating">
-
-      translating card
-
-      <div class="english">english</div>
-      <div class="other-language">other language</div>
-      <div class="verification">
-        <button (click)="doneTranslation()">You're Welcome!</button>
-      </div>
-
+<mat-card class="verificator-wrapper" *ngIf="!loading && languageSelected">  
+  <div [formGroup]="verificationForm" class="form">
+    <div class="control-wrapper">
+      <mat-label class="label">English: </mat-label>
+      <input matInput formControlName="english">
     </div>
-
-    <div class="verificator-loading" *ngIf="!translating">
-
-      <button (click)="newTranslation()">Gogogogo</button>
-      Next one coming up!
+    <div class="control-wrapper">
+      <mat-label class="label">Spanish: </mat-label>
+      <input matInput formControlName="spanish">
     </div>
-
+    <div class="button-wrapper">
+      <button class="primary" color="primary" mat-button>Submit</button>
+      <button class="basic" color="basic" mat-button (click)="nextItem()">Next</button>
+    </div>
   </div>
 
+
+</mat-card>
+
+<mat-card class="verificator-wrapper" *ngIf="translationsDone">  
+  <div class="text-wrapper">
+    <p>There is nothing left to translate.</p>
+    <p>Thank you for your time!</p>
+  </div>
 </mat-card>
