@@ -42,10 +42,10 @@ namespace TranslationStation.Controllers
         public async Task<IActionResult> Translations([FromQuery] string lang)
         {
             var translations = await translationRepository.GetAllAsync();
-            var returnVal = new List<GetTranslationsOutput>();
+            var returnVal = new Dictionary<string, string>();
             foreach (var translation in translations)
             {
-                returnVal.Add(new GetTranslationsOutput(translation.Key, languageService.GetValueOfLanguage(translation, lang)));
+                returnVal.Add(translation.Key, languageService.GetValueOfLanguage(translation, lang));
             }
             return new ContentResult() 
             {
