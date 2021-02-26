@@ -6,6 +6,8 @@ services:
       dockerfile: ./build/TranslationStation/Dockerfile
     environment: 
       - ASPNETCORE_URLS=http://+:8080
+      - GOOGLE_APPLICATION_CREDENTIALS=Google_Creds.json
+      - SupportedLanguages=[en, es]
     ports:
       - 8888:8080
     networks:
