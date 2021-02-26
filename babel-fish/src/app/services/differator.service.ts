@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TranslationStationService } from './translation-station.service';
 import englishObj from '../../languages/english.json';
-import { LanguageService } from './language.service';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,11 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class DifferatorService {
   private translationStation: TranslationStationService;
-  private langGang: LanguageService;
 
-  constructor( translationStation: TranslationStationService, langGang: LanguageService) {
-    this.translationStation = translationStation;
-    this.langGang = langGang;
+  constructor( translationStation: TranslationStationService) {
   }
 
   private postChanges(localObject, originObject): Observable<any> {
