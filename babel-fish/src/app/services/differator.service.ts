@@ -36,7 +36,7 @@ export class DifferatorService {
     // possible lang strings are: 'en', 'es'
     public differentiateItBroSki(lang: string): Observable<any> {
       return new Observable((obs) => {
-        this.langGang.getLanguageObject(lang).subscribe((langObj) => {
+        this.translationStation.getLanguage(lang).subscribe((langObj) => {
           obs.next(this.postChanges(englishObj, langObj));
           obs.complete();
         })
