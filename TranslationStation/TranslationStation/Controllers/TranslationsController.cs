@@ -23,10 +23,20 @@ namespace TranslationStation.Controllers
         /// <param name="languageId">The language ID of the translation to get.</param>
         /// <param name="unverified">Whether or not to filter out verified translations.</param>
         /// <returns>A list of translations in the specified language.</returns>
-        [HttpGet("{languageId}")]
-        public IActionResult Translations([FromRoute] string languageId, [FromQuery] bool unverified = false)
+        [HttpGet()]
+        public IActionResult Translations([FromQuery] string lang)
         {
             return new ContentResult() 
+            {
+                Content = JsonSerializer.Serialize(new[] { new { key = "button1", value = "Hola" } }),
+                ContentType = "application/json"
+            };
+        }
+
+        [HttpGet("/unverified")]
+        public IActionResult UnverifiedTranslations([FromQuery] string lang)
+        {
+            return new ContentResult()
             {
                 Content = JsonSerializer.Serialize(new[] { new { key = "button1", enVal = "Hello", value = "Hola" } }),
                 ContentType = "application/json"
@@ -44,7 +54,7 @@ namespace TranslationStation.Controllers
         // POST api/translations
         // Translate all english tags into all supported languages
         [HttpPost]
-        public IActionResult Post([FromBody] string value)
+        public IActionResult CreateTranslations([FromBody] string value)
         {
             return Ok(JsonSerializer.Serialize(new { value = value }));
         }
