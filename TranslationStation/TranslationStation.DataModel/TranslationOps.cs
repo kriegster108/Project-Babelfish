@@ -10,10 +10,12 @@ using TranslationStation.DataModel.Models.EF;
 
 namespace TranslationStation.DataModel
 {
-    public interface ITranslationOps : IGenericDataRepository<Translation>
+    public interface ITranslationOps 
     {
         TranslationDto Get(string key);
         Task<TranslationDto> GetAsync(string key);
+        IEnumerable<TranslationDto> GetAll();
+        Task<IEnumerable<TranslationDto>> GetAllAsync();
         void Add(TranslationDto incomingXltn);
         Task AddAsync(TranslationDto incomingXltn);
         TranslationDto Upsert(TranslationDto incomingXltn);
@@ -25,29 +27,29 @@ namespace TranslationStation.DataModel
     /// <summary>
     /// I forgot the term "data access" when naming this class.
     /// </summary>
-    public class TranslationOps : GenericDataRepository<Translation>, ITranslationOps
+    public class TranslationOps : ITranslationOps
     {
         private readonly TranslationContext _trnsCtx;
         private readonly IMapper _mapper;
+        private readonly GenericDataRepository<Translation> _translationRepo;
 
-        public TranslationOps(TranslationContext translationContext, IMapper mapper) : base(translationContext)
+        public TranslationOps(TranslationContext translationContext, IMapper mapper)
         {
             _trnsCtx = translationContext;
             _mapper = mapper;
+            _translationRepo = new GenericDataRepository<Translation>(translationContext);
         }
 
-        public List<TranslationDto> GetVerified(string languageKey)
+        public IEnumerable<TranslationDto> GetAll()
         {
-            var xltns = _trnsCtx.Translations.Where(t => t.IsVerified).ToList();
-            return _mapper.Map<List<TranslationDto>>(xltns);
+            return _mapper.Map<List<TranslationDto>>(_translationRepo.GetAll());
         }
 
-        public List<TranslationDto> GetUnverified(string languageKey)
+        public async Task<IEnumerable<TranslationDto>> GetAllAsync()
         {
-            var xltns = _trnsCtx.Translations.Where(t => !t.IsVerified).ToList();
-            return _mapper.Map<List<TranslationDto>>(xltns);
+            return _mapper.Map<List<TranslationDto>>(await _translationRepo.GetAllAsync());
         }
-        
+
         // Basic CRUD functions
         public TranslationDto Get(string key)
         {

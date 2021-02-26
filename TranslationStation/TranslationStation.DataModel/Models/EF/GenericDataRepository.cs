@@ -30,7 +30,7 @@ namespace TranslationStation.DataModel.Models.EF
         {
             _translationContext = translationContext;
         }
-
+        
         public virtual IList<T> GetAll(params Expression<Func<T, object>>[] navigationProperties)
         {
             IQueryable<T> dbQuery = _translationContext.Set<T>();
