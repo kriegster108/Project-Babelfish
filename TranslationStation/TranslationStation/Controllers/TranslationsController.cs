@@ -65,7 +65,7 @@ namespace TranslationStation.Controllers
             }
             return new ContentResult()
             {
-                Content = JsonSerializer.Serialize(new[] { new { key = "button1", enVal = "Hello", value = "Hola" } }),
+                Content = JsonSerializer.Serialize(returnVal),
                 ContentType = "application/json"
             };
         }
@@ -86,10 +86,10 @@ namespace TranslationStation.Controllers
         // POST api/translations
         // Translate all english tags into all supported languages
         [HttpPost]
-        public IActionResult CreateTranslations([FromBody] Dictionary<string, string> values)
+        public async Task<IActionResult> CreateTranslations([FromBody] Dictionary<string, string> values)
         {
             var translations = translationService.CreateTranslations(values);
-            // AddAllAsync
+            await translationRepository.UpsertAllAsync(translations);
             return Ok();
         }
     }
