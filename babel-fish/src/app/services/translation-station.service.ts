@@ -25,7 +25,7 @@ export class TranslationStationService {
   }
 
   sendVerifiedTranslation(translationObject:translationObj) {
-    return this.http.patch(`${this.TRANSLATION_STATION_URL}translations/unverified/en`, translationObject);
+    return this.http.patch(`${this.TRANSLATION_STATION_URL}translations/unverified/es`, translationObject);
   }
 }
 

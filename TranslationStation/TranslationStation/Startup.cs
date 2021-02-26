@@ -46,6 +46,17 @@ namespace TranslationStation
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TranslationStation", Version = "v1" });
             });
+            var corsBuilder = new CorsPolicyBuilder();
+            corsBuilder.AllowAnyHeader();
+            corsBuilder.AllowAnyMethod();
+            //corsBuilder.AllowAnyOrigin(); // For anyone access.
+            corsBuilder.WithOrigins("http://localhost:8080"); // for a specific url. Don't add a forward slash on the end!
+            corsBuilder.AllowCredentials();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,7 +80,7 @@ namespace TranslationStation
             app.UseMetricServer();
 
             app.UseAuthorization();
-
+            app.UseCors("SiteCorsPolicy");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
