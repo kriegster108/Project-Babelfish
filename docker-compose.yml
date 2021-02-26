@@ -12,7 +12,8 @@ services:
       - GOOGLE_APPLICATION_CREDENTIALS=Google_Creds.json
       - SupportedLanguages=[en, es]
     depends_on:
-      - postgresql
+      elasticsearch:
+        condition: service_healthy
     ports:
       - 8888:8080
     networks:
@@ -42,8 +43,8 @@ services:
       - POSTGRESQL_DATABASE=postgres
     ports: 
       - 5432:5432
-    volumes:
-      - ./data/postgres:/bitnami/postgresql
+    # volumes:
+    #   - ./data/postgres:/bitnami/postgresql
     networks:
       - babble
 

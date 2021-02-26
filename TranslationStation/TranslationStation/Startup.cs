@@ -10,8 +10,10 @@ using Microsoft.OpenApi.Models;
 using TranslationStation.DataModel;
 using TranslationStation.DataModel.Config;
 using Elastic.Apm.NetCoreAll;
+using Elastic.Apm.SqlClient;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Prometheus;
+using Elastic.Apm.AspNetCore;
 using TranslationStation.Core.Interfaces;
 using TranslationStation.Core.Services;
 
@@ -80,7 +82,8 @@ namespace TranslationStation
 
             app.UseRouting();
 
-            app.UseAllElasticApm(Configuration);
+            app.UseElasticApm(Configuration,
+	            new SqlClientDiagnosticSubscriber());  /* Enable tracing of outgoing db requests */
 
             app.UseHttpMetrics();
 
