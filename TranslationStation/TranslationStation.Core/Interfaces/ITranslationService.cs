@@ -13,6 +13,6 @@ namespace TranslationStation.Core.Interfaces
 
         void VerifyTranslation();
 
-        void CreateTranslations();
+        void CreateTranslations(Dictionary<string, string> values);
     }
 }

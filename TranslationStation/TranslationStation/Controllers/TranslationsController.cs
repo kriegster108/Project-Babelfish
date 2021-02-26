@@ -71,9 +71,10 @@ namespace TranslationStation.Controllers
         // POST api/translations
         // Translate all english tags into all supported languages
         [HttpPost]
-        public IActionResult CreateTranslations([FromBody] string value)
+        public IActionResult CreateTranslations([FromBody] Dictionary<string, string> values)
         {
-            return Ok(JsonSerializer.Serialize(new { value = value }));
+            translationService.CreateTranslations(values);
+            return Ok();
         }
     }
 }
