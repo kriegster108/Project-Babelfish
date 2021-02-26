@@ -12,5 +12,4 @@ export class PageWrapperComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

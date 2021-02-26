@@ -1,21 +1,33 @@
-<div [formGroup]="myGroup" *ngIf="!loading && !languageSelected && !translationsDone" class="form">
-  <mat-label>Choose Your Language</mat-label>
-  <mat-select  formControlName="langs" matNativeControl (selectionChange)="loadLanguage()">
-      <mat-option *ngFor="let lang of langList" [value]="lang">{{lang}}</mat-option>
-  </mat-select>
-</div>
-<div *ngIf="loading">
-  <app-spinner></app-spinner>
-</div>
+<mat-card class="chooseLang">
+  <div [formGroup]="myGroup" *ngIf="!loading && !languageSelected && !translationsDone" class="form">
+    <mat-form-field appearance="fill">
+    <mat-label class="titleChooseLang">Choose Your Language</mat-label>
+    <mat-select  formControlName="langs" matNativeControl (selectionChange)="loadLanguage()">
+        <mat-option *ngFor="let lang of langList" [value]="lang">{{lang}}</mat-option>
+    </mat-select> 
+    </mat-form-field> 
+  </div>
+</mat-card>
+
+
+  <div *ngIf="loading">
+    <app-spinner></app-spinner>
+  </div>
+
+
 <mat-card class="verificator-wrapper" *ngIf="!loading && languageSelected">  
   <div [formGroup]="verificationForm" class="form">
     <div class="control-wrapper">
+      <mat-form-field appearance="fill">
       <mat-label class="label">English: </mat-label>
       <input matInput formControlName="english">
+    </mat-form-field>
     </div>
     <div class="control-wrapper">
+      <mat-form-field appearance="fill">
       <mat-label class="label">Spanish: </mat-label>
       <input matInput formControlName="spanish">
+    </mat-form-field>
     </div>
     <div class="button-wrapper">
       <button class="primary" color="primary" mat-button (click)="submitTranslation()">Submit</button>

@@ -1,0 +1,10 @@
+
+<app-spinner *ngIf="loading"></app-spinner>
+
+<mat-card class="wrapper" *ngIf="!loading">
+  <button class="primary" color="primary" mat-button (click)="differentiate()">Submit</button>
+</mat-card>
+
+<mat-card class="wrapper" *ngIf="completeMessage">
+  <p>{{completeMessage}}</p>
+</mat-card>
