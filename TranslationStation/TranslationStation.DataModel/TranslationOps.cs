@@ -128,7 +128,8 @@ namespace TranslationStation.DataModel
 
         public IEnumerable<TranslationDto> GetAll()
         {
-            throw new System.NotImplementedException();
+            var existingXtln = _trnsCtx.Translations;
+            return _mapper.Map<List<TranslationDto>>(existingXtln);
         }
 
         public Task<IEnumerable<TranslationDto>> GetAllAsync()

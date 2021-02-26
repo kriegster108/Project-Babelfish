@@ -42,16 +42,6 @@ namespace TranslationStation.Core.Services
             }
         }
 
-        public List<TranslationDto> GetTranslations()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<TranslationDto> GetUnverifiedTranslations()
-        {
-            throw new NotImplementedException();
-        }
-
         public void VerifyTranslation()
         {
             throw new NotImplementedException();
