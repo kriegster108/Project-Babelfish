@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TranslationStationService } from './translation-station.service';
-import * as englishObj from '../../languages/english.json';
+import englishObj from '../../languages/english.json';
 import { LanguageService } from './language.service';
 import { Observable } from 'rxjs';
 
