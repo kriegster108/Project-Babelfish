@@ -11,19 +11,19 @@ namespace TranslationStation.DataModel.Models.EF
         public DbSet<Translation> Translations { get; set; }
         public TranslationContext(DbContextOptions<TranslationContext> options): base(options)
         {
-            try
-            {
-                var databaseCreator = base.Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator;
-                databaseCreator.CreateTables();
-            }
-            catch (Npgsql.NpgsqlException)
-            {
-                //A SqlException will be thrown if tables already exist. So simply ignore it.
-            }
-            catch (Exception)
-            {
-                // failsafe
-            }
+            // try
+            // {
+            //     var databaseCreator = base.Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator;
+            //     databaseCreator.CreateTables();
+            // }
+            // catch (Npgsql.NpgsqlException)
+            // {
+            //     //A SqlException will be thrown if tables already exist. So simply ignore it.
+            // }
+            // catch (Exception)
+            // {
+            //     // failsafe
+            // }
         }
     }
 

@@ -11,6 +11,8 @@ services:
       - ELASTIC_APM_ENVIRONMENT=local
       - GOOGLE_APPLICATION_CREDENTIALS=Google_Creds.json
       - SupportedLanguages=[en, es]
+    depends_on:
+      - postgresql
     ports:
       - 8888:8080
     networks:
@@ -24,6 +26,8 @@ services:
       - ELASTIC_APM_SERVER_URL=http://apm-server:8200
       - ELASTIC_APM_SERVICE_NAME=babel-fish
       - ELASTIC_APM_ENVIRONMENT=local
+    depends_on: 
+      - postgresql
     ports:
       - 8080:8080
     networks:
@@ -39,7 +43,7 @@ services:
     ports: 
       - 5432:5432
     volumes:
-      - postgresdata:/bitnami/postgresql
+      - ./data/postgres:/bitnami/postgresql
     networks:
       - babble
 
@@ -48,6 +52,8 @@ services:
     image: wrouesnel/postgres_exporter
     environment: 
       - DATA_SOURCE_NAME=postgresql://postgres:password123@postgresql:5432/postgres?sslmode=disable
+    depends_on: 
+      - postgresql
     networks:
       - babble
 
@@ -155,8 +161,8 @@ volumes:
     driver: local
   esdata:
     driver: local
-  postgresdata:
-    driver: local
+  # postgresdata:
+  #   driver: local
 
 networks:
   babble:
