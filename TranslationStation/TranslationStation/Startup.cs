@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using TranslationStation.DataModel;
 using TranslationStation.DataModel.Config;
 using Elastic.Apm.NetCoreAll;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Prometheus;
 
 namespace TranslationStation
