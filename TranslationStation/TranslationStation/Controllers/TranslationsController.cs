@@ -54,7 +54,7 @@ namespace TranslationStation.Controllers
             };
         }
 
-        [HttpGet("/unverified")]
+        [HttpGet("unverified")]
         public async Task<IActionResult> UnverifiedTranslations([FromQuery] string lang)
         {
             var translations = await translationRepository.GetAllAsync();
@@ -89,12 +89,12 @@ namespace TranslationStation.Controllers
         public async Task<IActionResult> CreateTranslations([FromBody] Dictionary<string, string> values)
         {
             var translations = translationService.CreateTranslations(values);
+            await translationRepository.UpsertAllAsync(translations);
             return new ContentResult()
             {
                 Content = JsonSerializer.Serialize(translations),
                 ContentType = "application/json"
             };
-            //await translationRepository.UpsertAllAsync(translations);
             //return Ok();
         }
     }
