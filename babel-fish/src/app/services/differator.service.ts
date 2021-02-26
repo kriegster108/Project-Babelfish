@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DifferatorService {
-  private translationStation: TranslationStationService;
 
-  constructor( translationStation: TranslationStationService) {
+  
+  constructor(private translationStation: TranslationStationService) {
   }
 
   private postChanges(localObject, originObject): Observable<any> {
