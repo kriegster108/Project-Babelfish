@@ -73,13 +73,13 @@ namespace TranslationStation.Controllers
         // PATCH /api/translations/{ISO639-1 language id}/{translation key}
         // Request to overwrite unverified translation with verified translation
         [HttpPatch("{languageId}/{translationKey}")]
-        public async Task<IActionResult> VerifyTranslation([FromBody] VerifyTranslationInput value, string languageId, string translationKey)
+        public IActionResult VerifyTranslation([FromBody] VerifyTranslationInput value, string languageId, string translationKey)
         {
             var upsertObject = new TranslationDto();
             upsertObject.Key = translationKey;
             upsertObject.SpanishWord = value.value;
             upsertObject.IsVerified = true;
-            await translationRepository.UpsertAsync(upsertObject);
+            translationRepository.Upsert(upsertObject);
             return Ok(JsonSerializer.Serialize(new { value = value.value, languageId = languageId, translationKey = translationKey }));
         }
 
