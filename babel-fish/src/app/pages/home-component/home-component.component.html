@@ -3,10 +3,12 @@
   <p class="header">Welcome to Project Babel!</p>
 
   <div [formGroup]="myGroup" *ngIf="!loading" class="form">
+    <mat-form-field appearance="fill">
     <mat-label>Choose Your Language</mat-label>
     <mat-select  formControlName="langs" matNativeControl (selectionChange)="loadLanguage()">
       <mat-option *ngFor="let lang of langList" [value]="lang">{{lang}}</mat-option>
     </mat-select>
+  </mat-form-field>
   </div>
   <div *ngIf="loading">
     <app-spinner></app-spinner>

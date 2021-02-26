@@ -5,15 +5,25 @@
 
 .primary {
   margin: 4px 8px;
-  border: 1px solid black;
+  // border: 1px solid black;
   color: white !important;
   background-color: #3f51b5;
+}
+
+.primary:hover {
+  background-color: #536DFE;
 }
 
 .wrapper{
   margin: 30px auto !important;
   max-width: 90%;
   width: 650px;
+  align-items: center;
+  text-align: center;
+}
+
+.title {
+  margin: auto;
   align-items: center;
   text-align: center;
 }

@@ -1,17 +1,23 @@
-mat-select {
-    border:1px solid black;
-    width: 100px;
-    display: inline-block;
-    margin-left: 8px;
-}
+// mat-select {
+//     border:1px solid black;
+//     width: 100px;
+//     display: inline-block;
+//     margin-left: 8px;
+// }
 
 .form {
     padding:16px;
 }
 
 .home-wrapper{
-  margin: 50px;
+  // margin: 50px;
   text-align: center;
+
+  margin: 30px auto !important;
+  max-width: 90%;
+  width: 650px;
+  // border:1px solid black;
+  align-items: center;
 }
 
 .header{
