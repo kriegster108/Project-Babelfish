@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TranslationStation.Core\TranslationStation.Core.csproj" />
     <ProjectReference Include="..\TranslationStation.DataModel\TranslationStation.DataModel.csproj" />
   </ItemGroup>
 

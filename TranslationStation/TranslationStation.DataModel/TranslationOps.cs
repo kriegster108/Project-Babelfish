@@ -4,12 +4,14 @@ using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Design;
 using TranslationStation.DataModel.Models.API;
 using TranslationStation.DataModel.Models.EF;
 using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using Expression = System.Linq.Expressions.Expression;
+using System.Linq;
 
 namespace TranslationStation.DataModel
 {
@@ -31,10 +33,13 @@ namespace TranslationStation.DataModel
 
         TranslationDto Get(string key);
         Task<TranslationDto> GetAsync(string key);
+        IEnumerable<TranslationDto> GetAll();
+        Task<IEnumerable<TranslationDto>> GetAllAsync();
         void Add(TranslationDto incomingXltn);
         Task AddAsync(TranslationDto incomingXltn);
         TranslationDto Upsert(TranslationDto incomingXltn);
         Task<TranslationDto> UpsertAsync(TranslationDto incomingXltn);
+        Task<IEnumerable<TranslationDto>> UpsertAllAsync(IEnumerable<TranslationDto> incomingXltn);
         void Delete(TranslationDto incomingXltn);
         Task DeleteAsync(TranslationDto incomingXltn);
     }
@@ -168,6 +173,36 @@ namespace TranslationStation.DataModel
             return _mapper.Map<TranslationDto>(updatedXltn.Entity);
         }
 
+        public async Task<IEnumerable<TranslationDto>> UpsertAllAsync(IEnumerable<TranslationDto> incomingXltns)
+        {
+            var existingXltns = new List<Translation>();
+            var newXltns = new List<Translation>();
+            var returnValue = new List<TranslationDto>();
+            foreach (var incomingXltn in incomingXltns)
+            {
+                var existingXltn = await _trnsCtx.Translations.FindAsync(incomingXltn.Key);
+                if (existingXltn != null)
+                {
+                    existingXltn.EnglishWord = incomingXltn.EnglishWord;
+                    existingXltn.SpanishWord = incomingXltn.SpanishWord;
+                    existingXltn.IsVerified = incomingXltn.IsVerified;
+                    existingXltns.Add(existingXltn);
+                } else
+                {
+                    newXltns.Add(_mapper.Map<Translation>(incomingXltn));
+                }
+            }
+
+
+            await _trnsCtx.AddRangeAsync(newXltns);
+            _trnsCtx.Translations.UpdateRange(existingXltns);
+            await _trnsCtx.SaveChangesAsync();
+
+            returnValue.AddRange(newXltns.Select(x => _mapper.Map<TranslationDto>(x)));
+            returnValue.AddRange(existingXltns.Select(x => _mapper.Map<TranslationDto>(x)));
+            return returnValue;
+        }
+
         public void Delete(TranslationDto incomingXltn)
         {
             var existingXltn = _trnsCtx.Translations.Find(incomingXltn.Key);
@@ -194,5 +229,21 @@ namespace TranslationStation.DataModel
             _ = await _trnsCtx.SaveChangesAsync();
         }
 
+        public IEnumerable<TranslationDto> GetAll()
+        {
+            var existingXtln = _trnsCtx.Translations;
+            return _mapper.Map<List<TranslationDto>>(existingXtln);
+        }
+
+        public async Task<IEnumerable<TranslationDto>> GetAllAsync()
+        {
+            var translations = _trnsCtx.Translations.AsAsyncEnumerable();
+            List<TranslationDto> translationDTOs = new List<TranslationDto>();
+            await foreach (var item in translations)
+            {
+                translationDTOs.Add(_mapper.Map<TranslationDto>(item));
+            }
+            return translationDTOs;
+        }
     }
 }
