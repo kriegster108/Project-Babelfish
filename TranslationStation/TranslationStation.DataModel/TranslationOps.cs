@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TranslationStation.DataModel.Models.API;
 using TranslationStation.DataModel.Models.EF;
@@ -9,6 +10,8 @@ namespace TranslationStation.DataModel
     {
         TranslationDto Get(string key);
         Task<TranslationDto> GetAsync(string key);
+        IEnumerable<TranslationDto> GetAll();
+        Task<IEnumerable<TranslationDto>> GetAllAsync();
         void Add(TranslationDto incomingXltn);
         Task AddAsync(TranslationDto incomingXltn);
         TranslationDto Upsert(TranslationDto incomingXltn);
@@ -121,6 +124,16 @@ namespace TranslationStation.DataModel
             // https://github.com/dotnet/efcore/issues/18746
             _ = _trnsCtx.Translations.Remove(existingXltn);
             _ = await _trnsCtx.SaveChangesAsync();
+        }
+
+        public IEnumerable<TranslationDto> GetAll()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<IEnumerable<TranslationDto>> GetAllAsync()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
