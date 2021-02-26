@@ -1,17 +1,11 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using AutoMapper;
-using AutoMapper.Extensions.ExpressionMapping;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Design;
 using TranslationStation.DataModel.Models.API;
 using TranslationStation.DataModel.Models.EF;
-using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
-using Expression = System.Linq.Expressions.Expression;
-using System.Linq;
 
 namespace TranslationStation.DataModel
 {
@@ -33,8 +27,6 @@ namespace TranslationStation.DataModel
 
         TranslationDto Get(string key);
         Task<TranslationDto> GetAsync(string key);
-        IEnumerable<TranslationDto> GetAll();
-        Task<IEnumerable<TranslationDto>> GetAllAsync();
         void Add(TranslationDto incomingXltn);
         Task AddAsync(TranslationDto incomingXltn);
         TranslationDto Upsert(TranslationDto incomingXltn);
@@ -229,7 +221,7 @@ namespace TranslationStation.DataModel
             _ = await _trnsCtx.SaveChangesAsync();
         }
 
-        public IEnumerable<TranslationDto> GetAll()
+/*        public IEnumerable<TranslationDto> GetAll()
         {
             var existingXtln = _trnsCtx.Translations;
             return _mapper.Map<List<TranslationDto>>(existingXtln);
@@ -244,6 +236,6 @@ namespace TranslationStation.DataModel
                 translationDTOs.Add(_mapper.Map<TranslationDto>(item));
             }
             return translationDTOs;
-        }
+        }*/
     }
 }
