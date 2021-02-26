@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TranslationStation.DataModel.Models.API;
 using TranslationStation.DataModel.Models.EF;
 
@@ -142,27 +143,14 @@ namespace TranslationStation.DataModel
             _ = _trnsCtx.SaveChanges();
             return _mapper.Map<TranslationDto>(updatedXltn.Entity);
         }
+
         public async Task<TranslationDto> UpsertAsync(TranslationDto incomingXltn)
         {
-            var existingXltn = await _trnsCtx.Translations.FindAsync(incomingXltn.Key);
-
-            // Insert if null
-            if (existingXltn == null)
-            {
-                var xltn = _mapper.Map<Translation>(incomingXltn);
-                var addedXltn = await _trnsCtx.AddAsync(xltn);
-                return _mapper.Map<TranslationDto>(addedXltn.Entity);
-            }
-
-            existingXltn.EnglishWord = incomingXltn.EnglishWord;
-            existingXltn.SpanishWord = incomingXltn.SpanishWord;
-            existingXltn.IsVerified = incomingXltn.IsVerified;
-
-            // There is no UpdateAsync in EFCore
-            // https://github.com/dotnet/efcore/issues/18746
-            var updatedXltn = _trnsCtx.Translations.Update(existingXltn);
+            var xltn = _mapper.Map<Translation>(incomingXltn);
+            _trnsCtx.Translations.Upsert(xltn);
             _ = await _trnsCtx.SaveChangesAsync();
-            return _mapper.Map<TranslationDto>(updatedXltn.Entity);
+            var result2 = await _trnsCtx.FindAsync<Translation>(incomingXltn.Key);
+            return _mapper.Map<TranslationDto>(result2);
         }
 
         public async Task<IEnumerable<TranslationDto>> UpsertAllAsync(IEnumerable<TranslationDto> incomingXltns)

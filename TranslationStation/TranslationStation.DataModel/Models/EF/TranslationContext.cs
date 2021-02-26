@@ -13,7 +13,7 @@ namespace TranslationStation.DataModel.Models.EF
         {
             try
             {
-                var databaseCreator = Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator;
+                var databaseCreator = base.Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator;
                 databaseCreator.CreateTables();
             }
             catch (Npgsql.NpgsqlException)
@@ -24,7 +24,6 @@ namespace TranslationStation.DataModel.Models.EF
             {
                 // failsafe
             }
-
         }
     }
 
