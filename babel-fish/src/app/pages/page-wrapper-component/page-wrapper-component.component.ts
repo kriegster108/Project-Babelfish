@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
+import { HeaderService } from '../../services/header.service';
 
 @Component({
   selector: 'app-page-wrapper-component',
@@ -8,9 +9,10 @@ import { HeaderComponent } from '../header/header.component';
 })
 export class PageWrapperComponent implements OnInit {
 
-  constructor() { }
+  constructor(private headerService: HeaderService) { }
 
   ngOnInit(): void {
+    this.headerService.setTitle('Intelligence');
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
 import { FormControl, FormGroup} from '@angular/forms';
+import { HeaderService } from 'src/app/services/header.service';
 
 @Component({
   selector: 'app-home-component',
@@ -16,13 +17,15 @@ export class HomeComponent implements OnInit {
   languageObject: any;
   langForm: any;
   constructor(
-    private langService : LanguageService
+    private langService : LanguageService,
+    private headerService : HeaderService
   ) { }
 
   ngOnInit(): void {
     this.myGroup = new FormGroup({
       langs: new FormControl()
     });
+    this.headerService.setTitle('Home');
   }
 
   loadLanguage() {

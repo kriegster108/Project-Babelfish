@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { TranslationStationService } from '../../services/translation-station.service';
+import { HeaderService } from '../../services/header.service';
 
 @Component({
   selector: 'app-translator-verificator',
@@ -21,7 +22,8 @@ export class TranslatorVerificatorComponent implements OnInit {
   translationsDone = false;
   constructor(
     private langService : TranslationStationService,
-    private cd: ChangeDetectorRef 
+    private cd: ChangeDetectorRef,
+    private headerService: HeaderService 
   ) {
 
   }
@@ -34,6 +36,7 @@ export class TranslatorVerificatorComponent implements OnInit {
       english: new FormControl('', []),
       spanish: new FormControl()
     });
+    this.headerService.setTitle('Translator Verificator');
   }
 
   loadLanguage() {
