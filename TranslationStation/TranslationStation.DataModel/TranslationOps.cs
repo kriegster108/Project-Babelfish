@@ -1,11 +1,16 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using AutoMapper;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Design;
 using TranslationStation.DataModel.Models.API;
 using TranslationStation.DataModel.Models.EF;
 
 namespace TranslationStation.DataModel
 {
-    public interface ITranslationOps
+    public interface ITranslationOps : IGenericDataRepository<Translation>
     {
         TranslationDto Get(string key);
         Task<TranslationDto> GetAsync(string key);
@@ -20,17 +25,30 @@ namespace TranslationStation.DataModel
     /// <summary>
     /// I forgot the term "data access" when naming this class.
     /// </summary>
-    public class TranslationOps : ITranslationOps
+    public class TranslationOps : GenericDataRepository<Translation>, ITranslationOps
     {
         private readonly TranslationContext _trnsCtx;
         private readonly IMapper _mapper;
 
-        public TranslationOps(TranslationContext translationContext, IMapper mapper)
+        public TranslationOps(TranslationContext translationContext, IMapper mapper) : base(translationContext)
         {
             _trnsCtx = translationContext;
             _mapper = mapper;
         }
 
+        public List<TranslationDto> GetVerified(string languageKey)
+        {
+            var xltns = _trnsCtx.Translations.Where(t => t.IsVerified).ToList();
+            return _mapper.Map<List<TranslationDto>>(xltns);
+        }
+
+        public List<TranslationDto> GetUnverified(string languageKey)
+        {
+            var xltns = _trnsCtx.Translations.Where(t => !t.IsVerified).ToList();
+            return _mapper.Map<List<TranslationDto>>(xltns);
+        }
+        
+        // Basic CRUD functions
         public TranslationDto Get(string key)
         {
             var existingXtln = _trnsCtx.Translations.Find(key);
@@ -122,5 +140,6 @@ namespace TranslationStation.DataModel
             _ = _trnsCtx.Translations.Remove(existingXltn);
             _ = await _trnsCtx.SaveChangesAsync();
         }
+
     }
 }
