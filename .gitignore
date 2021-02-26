@@ -463,3 +463,4 @@ MigrationBackup/
 .ionide/
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio
+/TranslationStation/TranslationStation/Google_Creds.json

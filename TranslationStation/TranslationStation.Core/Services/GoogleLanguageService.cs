@@ -13,9 +13,9 @@ namespace TranslationStation.Core.Services
     public class GoogleLanguageService : LanguageService, ILanguageService
     {
         private TranslationClient translationClient;
-        public GoogleLanguageService(IConfiguration config, TranslationClient client) : base(config)
+        public GoogleLanguageService(IConfiguration config) : base(config)
         {
-            translationClient = client;
+            translationClient = TranslationClient.Create();
         }
 
         public string GetValueOfLanguage(TranslationDto translation, string language)

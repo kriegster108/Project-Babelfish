@@ -44,7 +44,7 @@ namespace TranslationStation
             // TranslationOps
             services.AddScoped<ITranslationOps, TranslationOps>();
             services.AddScoped<ITranslationService, GoogleTranslationService>();
-            services.AddScoped<ILanguageService, GoogleLanguageService>();
+            services.AddScoped<ILanguageService, GoogleLanguageService>((x) => new GoogleLanguageService(Configuration));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

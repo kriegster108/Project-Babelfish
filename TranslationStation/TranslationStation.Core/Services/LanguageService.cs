@@ -12,7 +12,8 @@ namespace TranslationStation.Core.Services
         public LanguageService(IConfiguration config)
         {
             configuration = config;
-            SupportedLanguages = configuration.GetValue<List<string>>("SupportedLanguages");
+            string supportedLanguagesString = configuration.GetValue<string>("SupportedLanguages");
+            SupportedLanguages = new List<string>(supportedLanguagesString.Split(", "));
             if (SupportedLanguages.Count == 0)
             {
                 throw new Exception("Failed to retreive supported languages from SupportedLanguages environment variable.");

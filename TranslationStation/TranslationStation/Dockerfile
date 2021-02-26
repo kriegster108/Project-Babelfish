@@ -2,6 +2,7 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim AS base
 WORKDIR /app
+COPY "Google_Creds.json", "/"
 EXPOSE 80
 EXPOSE 443
 
